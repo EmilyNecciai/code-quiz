@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Quiz - American Dialects</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+</head>
+<body>
+    <header>
+        <h1>Pop Quiz!</h1>
+        <h2>HTML, CSS, & JavaScript</h2>
+    </header>
+
+    <main class="container">
+        <div class="instructions">
+            <h3>Answer the questions below - but keep an eye on the timer!</h3>
+            <button class="start-btn" id="start-btn">Start Quiz & Timer</button>
+
+
+            <div class="quiz-box">
+                <div class="quiz-content" id="quiz-content">
+                    <h4>Question:</h4>
+                    <p class="question" id="question"></p>
+                    <div class="answerBtns">
+                        <button class="btn" id="btnA">A: </button>
+                        <button class="btn" id="btnB">B: </button>
+                        <button class="btn" id="btnC">C: </button>
+                        <button class="btn" id="btnC">D: </button>    
+                    </div>
+                </div>
+            </div>
+
+            <div class="timer-box">
+                <h4>Time remaining:</h4>
+                <p id="timer"></p>
+            </div>
+
+
+            <div class="score-box">
+                <h4>Score:</h4>
+                <p id="score"></p>
+                <button class="show-btn" id="show-btn">See High Scores</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
