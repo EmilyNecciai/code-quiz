@@ -2,109 +2,145 @@
 var questions = [
     {
         question: "What does HTML stand for?", 
-        a: "HyperText Markup Language",
-        b: "HyperText Markup Logistics", 
-        c: "Hand Typed Markup Language",
-        d: "HyperText Modal Language",
-        correct: "a"
+        choices: [
+            "HyperText Markup Language",
+            "HyperText Markup Logistics", 
+            "Hand Typed Markup Language",
+            "HyperText Modal Language"],
+        correct: "HyperText Markup Language"
     },
     {
         question: "What does CSS stand for?", 
-        a: "Cool Style Sheets",
-        b: "Cascading Sheeted Style", 
-        c: "Cassandra Style Sheets",
-        d: "Cascading Style Sheets",
-        correct: "d"
+        choices: [
+            "Cool Style Sheets",
+            "Cascading Sheeted Style", 
+            "Cassandra Style Sheets",
+            "Cascading Style Sheets"],
+        correct: "Cascading Style Sheets"
     },
     {
         question: "What does JS stand for?", 
-        a: "JumpScript",
-        b: "JavaScript", 
-        c: "JuneScript",
-        d: "JavaStyles",
-        correct: "b"
+        choices: [
+            "JumpScript",
+            "JavaScript", 
+            "JuneScript",
+            "JavaStyles"],
+        correct: "JavaScript"
     }
 ]
 
 // GET NEEDED ELEMENTS FOR MANIPULATION
-var questionEl = document.getElementById("question");
-var timerEl = document.getElementById("countdown");
+var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
-var quizContent = document.getElementById("quiz-content").classList.add("hide");
+var quizBox = document.getElementById("quiz-box")
 var startBtn = document.getElementById("start-btn");
-var showBtn = document.getElementById("show-btn");
-var ansBtn = document.getElementsByClassName("btn");
-var choiceA = document.getElementById("btnA");
-var choiceB = document.getElementById("btnB");
-var choiceC = document.getElementById("btnC");
-var choiceD = document.getElementById("btnD");
-
-// START AND SHOW QUIZ SCORE AT 0
-var quizScore = 0;
-scoreEl.innerText = quizScore;
-
-for (var i = 0; i < questions.length; i++) {
-    questionEl.innerHTML = questions[i].question;
-    choiceA.innerHTML = "A: " + questions[i].a;
-    choiceB.innerHTML = "B: " + questions[i].b;
-    choiceC.innerHTML = "C: " + questions[i].c;
-    choiceD.innerHTML = "D: " + questions[i].d;
-
-}
+var yourScore = document.getElementById("score");
+var yourInitials = document.getElementById("your-initials");
 
 
-// SHOW QUESTIONS
-
-// var showQuestions = function() {
-//     for (var i = 0; i < questions.length; i++) {
-
-//         var userAnswer = document.addEventListener("click", function(){
-//             choiceA.innerHTML = "Hello World";
-//           });
-          
-//             // User answer is whatever button the user picks
-//             console.log(userAnswer);
-//         }
-        
-//         if (userAnswer === questions[i].correct) {
-//             quizScore++;
-//         } else {
-//             timeLeft = timeLeft - 25;
-//         }
-//     } 
-
-
+// STARTING VARIABLES
+var quizScore = scoreEl;
+var currentQuestion;
+var questionCounter;
+var timeLeft = 1000;
 
 
 
 // START QUIZ FUNCTION
 var startQuiz = function() {
     document.getElementById("start-btn").classList.add("hide");
-    document.getElementById("quiz-content").classList.toggle("hide");
+    questionCounter = 0;
     countdown();
-    // showQuestions();
+    showQuestions();
+    showAnswers();
 }
 
+//SHOW QUESTIONS
 
-//END QUIZ FUNCTIOn
+function placeholder() {
+    quizBox.innerHTML = "";
+  }
+  
+
+function showQuestions() {
+    if (questionCounter >= questions.length) {
+        quizBox.textContent = "You finished all the questions!";
+        endQuiz();
+        restartQuiz();
+        clearInterval(timeLeft);
+    } else {
+        placeholder();
+        currentQuestion = questions[questionCounter];
+        var questionSpace = document.createElement("h3");
+        questionSpace.textContent = currentQuestion.question;
+        quizBox.appendChild(questionSpace);
+    
+    }
+
+  }
+
+  //SHOW ANSWERS
+  
+  function showAnswers() {
+    for (let i = 0; i < currentQuestion.choices.length; i++) {
+      var answerSpace = document.createElement("button");
+      answerSpace.setAttribute("choices", currentQuestion.choices[i]);
+      answerSpace.textContent = currentQuestion.choices[i];
+      quizBox.appendChild(answerSpace);
+    }
+  }
+
+//   //CHOOSE ANSWER
+  
+quizBox.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (e.target.matches("button")) {
+      var chosenAnswer = e.target.getAttribute("choices");
+      correctAnswer(chosenAnswer);
+      console.log(chosenAnswer);
+    }
+  });
+  
+// //   // COMPARE ANSWERS
+  function correctAnswer(chosenAnswer) {
+    if (chosenAnswer === currentQuestion.correct) {
+        questionCounter++;
+        showQuestions();
+        showAnswers();
+    } else {
+        questionCounter++;  
+        timeLeft = timeLeft - 100;
+        showQuestions();
+        showAnswers();
+    }
+  }
+
+
+//END QUIZ FUNCTION
 
 var endQuiz = function() {
-    document.getElementById("start-btn").classList.toggle("hide");
-    document.getElementById("quiz-content").classList.toggle("hide");
+    document.getElementById("quiz-box").classList.toggle("hide");
+    document.getElementById("restart").classList.toggle("hide");
+    quizScore = timeLeft;
+
+}
+
+//RESTART QUIZ
+var restartQuiz = function() {
+    countdown();
+    startQuiz();
+    document.getElementById("restart").classList.toggle("hide");
 }
 
 
 
-// timer - GOOD
-var timerEl = document.getElementById("timer");
-
-var timeLeft = 1000;
+// TIMER FUNCTION
 
 var countdown = function() {
     var timeInterval = setInterval(function() {
         if (timeLeft >= 0) {
-            timerEl.textContent = timeLeft + "s";
             timeLeft--;
+            timerEl.textContent = timeLeft + "s";
         } else {
             timerEl.textContent = "Out of time!";
             clearInterval(timeInterval);
@@ -114,13 +150,41 @@ var countdown = function() {
 }
 
 
+//STORE YOUR SCORE FUNCTION
+function storeScore(){
+
+    localStorage.setItem("score", yourScore);  
+    localStorage.setItem("your-initials", yourInitials);
+
+    showHighScores();
+   }
+
+   // SHOW HIGH SCORES FUNCTION
 var showHighScores = function() {
-    console.log(score);
+
+    for (var i = 0; i < localStorage.length; i++){
+
+        // yourInitials = "EN";
+        // yourScore = 100;
+
+        localStorage.getItem("score");
+        localStorage.getItem("your-initials");
+
+        document.getElementById("high-scores").innerHTML = yourInitials + "&emsp;" + yourScore;
+
+    }
+    
+
+
+
     //To do: Use Local Storage to show scores
 }
 
-//START QUIZ EVENT LISTENER - START BUTTON
-startBtn.onclick = startQuiz;
-showBtn.onclick = showHighScores;
 
+//START QUIZ EVENT LISTENER - START BUTTON
+startBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    startQuiz();
+  });
+  
 

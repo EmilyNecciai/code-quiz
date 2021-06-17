@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop Quiz - American Dialects</title>
+    <title>Pop Quiz - Code</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
     
 </head>
@@ -20,29 +20,35 @@
             <button class="start-btn" id="start-btn">Start Quiz & Timer</button>
         </div>
 
-        <div class="quiz-box">
-            <div class="quiz-content" id="quiz-content">
-                <h4>Question:</h4>
-                <p class="question" id="question"></p>
-                <div class="answerBtns">
-                    <button class="btn" id="btnA">A: </button>
-                    <button class="btn" id="btnB">B: </button>
-                    <button class="btn" id="btnC">C: </button>
-                    <button class="btn" id="btnD">D: </button>    
-                </div>
-            </div>
+        <div id="quiz-box">
+
         </div>
 
         <div class="timer-box">
             <h4>Time remaining:</h4>
             <p id="timer"></p>
+            <button id="restart" class="hide" onclick="restartQuiz()">Restart Quiz</button>
         </div>
-
+<hr>
 
         <div class="score-box">
             <h4>Score:</h4>
             <p id="score"></p>
-            <button class="show-btn" id="show-btn">See High Scores</button>
+            <hr>
+            <form id="scoreForm">
+                <p>Save Your Score: </p>
+                <br>
+                Initials: <input type="text" id="your-initials" name="initials"><br>
+                <input class="submit-button" type="button" onclick="storeScore()" value="Submit">
+            </form>
+
+            <hr>
+
+
+            <button class="show-btn" onclick="showHighScores()" id="show-btn">See High Scores</button>
+            <div id="high-scores">
+
+            </div>
         </div>
 
     </main>

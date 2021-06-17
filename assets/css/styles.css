@@ -1,5 +1,5 @@
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'Courier New', Courier, monospace;
 }
 
 body {
@@ -8,15 +8,13 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: bisque;
+    background-color: black;
+    color: yellowgreen;
 }
 
-.quiz-box {
-    border: 1px dashed black;
+#quiz-box {
+    border: 1px dashed white;
     border-radius: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
     padding: 10px 0 15px 0;
 }
 
@@ -25,22 +23,34 @@ body {
 }
 
 .answerBtns {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
     padding: 10px 0 15px 0;
-    width: 100%;
+    width: 51%;
 }
 
-.btn {
-    width: 100%;
-    text-align: left;
+button:hover, 
+.submit-button:hover {
+    background-color: yellowgreen;
+}
+
+
+button {
+    width: 51%;
+    text-align: center;
+    padding: 10px 0 15px 0;
+    margin: 5px;
+}
+
+.submit-button, 
+#restart {
+    width: 25%;
+    text-align: center;
     padding: 5px;
     margin: 5px;
 }
 
+
 #timer {
-    font-size: 70px;
+    font-size: 50px;
 }
 
 .start-btn, 
