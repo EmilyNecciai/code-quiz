@@ -26,6 +26,23 @@ var questions = [
             "JuneScript",
             "JavaStyles"],
         correct: "JavaScript"
+    },
+    {
+        question: "What is the first element in an array?", 
+        choices: [
+            "1",
+            "0", 
+            "null"],
+        correct: "0"
+    },
+    {
+        question: "What does the array property of .length do?", 
+        choices: [
+            "Returns the function that created the Array object's prototype.",
+            "Joins two or more arrays, and returns a copy of the joined arrays.", 
+            "Sets or returns the number of elements in an array.",
+            "Creates a new array with the result of calling a function for each array element."],
+        correct: "Sets or returns the number of elements in an array."
     }
 ]
 
@@ -36,14 +53,15 @@ var quizBox = document.getElementById("quiz-box")
 var startBtn = document.getElementById("start-btn");
 var restartBtn = document.getElementById("restart");
 var yourScore = document.getElementById("score");
-var yourInitials = document.getElementById("your-initials");
+var highScores = document.getElementById("high-scores");
+var yourInitials = document.querySelector("#your-initials");
 
 
 // STARTING VARIABLES
-var yourScore = 0;
+var yourScore;
 var currentQuestion;
 var questionCounter;
-var timeLeft = 10;
+var timeLeft;
 
 
 // TIMER FUNCTION
@@ -66,20 +84,20 @@ var countdown = function() {
 var startQuiz = function() {
     document.getElementById("start-btn").classList.add("hide");
     document.getElementById("main").classList.remove("hide");
-
+    timeLeft = 100;
+    yourScore = 0;
     questionCounter = 0;
     countdown();
     showQuestions();
     showAnswers();
 }
 
-//SHOW QUESTIONS
+//SHOW QUESTIONS AND EMPTY DIV
 
 function placeholder() {
     quizBox.innerHTML = "";
   }
   
-
 function showQuestions() {
     if (questionCounter > questions.length - 1) {
         endQuiz();
@@ -104,7 +122,7 @@ function showQuestions() {
     }
   }
 
-  //CHOOSE ANSWER
+  //CHOOSE ANSWER AND GET VALUE OF THAT ANSWER FOR COMPARE ANSWERS FUNCTION
   
 quizBox.addEventListener("click", function (e) {
     e.preventDefault();
@@ -126,7 +144,7 @@ quizBox.addEventListener("click", function (e) {
         showAnswers();
     } else {
         questionCounter++;  
-        timeLeft = timeLeft - 100;
+        timeLeft = timeLeft - 10;
         showQuestions();
         showAnswers();
     }
@@ -151,45 +169,30 @@ var endQuiz = function() {
     }
 }
 
-// //RESTART QUIZ
-// var restartQuiz = function() {
-// }
-
-
-
-
-
-
 //STORE YOUR SCORE FUNCTION
 function storeScore(){
-
-    localStorage.setItem("score", yourScore);  
-    localStorage.setItem("your-initials", yourInitials);
-
-    showHighScores();
+    if (score.innerHTML === undefined || yourInitials.value === undefined) {
+        alert("You must input your initials or score above 0 to save your score.")
+    } else {
+        // console.log(score.innerHTML);
+        // console.log(yourInitials.value);
+    
+        localStorage.setItem("score", JSON.stringify(score.innerHTML));  
+        // Element.setAttribute("your-initials", yourInitials.textContent);
+        localStorage.setItem("your-initials", JSON.stringify(yourInitials.value));
+    
+    }
    }
 
    // SHOW HIGH SCORES FUNCTION
 var showHighScores = function() {
 
-    for (var i = 0; i < localStorage.length; i++){
+        var storedScores = JSON.parse(localStorage.getItem("score"));
+        var storedInitials = JSON.parse(localStorage.getItem("your-initials"));
 
-        // yourInitials = "EN";
-        // yourScore = 100;
+        highScores.innerHTML = storedInitials + "&emsp;" + storedScores;
 
-        localStorage.getItem("score");
-        localStorage.getItem("your-initials");
-
-        document.getElementById("high-scores").innerHTML = yourInitials + "&emsp;" + yourScore;
-
-    }
-    
-
-
-
-    //To do: Use Local Storage to show scores
 }
-
 
 //START QUIZ EVENT LISTENER - START BUTTON
 startBtn.addEventListener("click", function (e) {
@@ -203,3 +206,17 @@ startBtn.addEventListener("click", function (e) {
   });
 
 
+//CODE GRAVEYARD
+//MAY USE FOR LOOPING HIGH SCORES LATER.
+//     // for (var i = 0; i < localStorage.length; i++){
+
+//         // yourInitials = "EN";
+//         // yourScore = 100;
+
+//         // document.getElementById("high-scores").innerHTML = storedInitials + "&emsp;" + storedScores;
+//         // var li = document.createElement("high-scores");
+
+//         // highScores.appendChild(li);
+//         // li.innerHTML = storedInitials[i] + "&emsp;" + storedScores[i];
+
+//     // }
