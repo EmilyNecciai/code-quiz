@@ -4,7 +4,7 @@ Code Quiz for Module 4: Web APIs
 Live site: https://emilynecciai.github.io/code-quiz/
 
 Final Look: 
-![Placeholder]()
+![Placeholder](https://github.com/EmilyNecciai/code-quiz/blob/92c2ad4a71654292933d421f690d185c18b20591/assets/img/final-demo.gif)
 
 # Requirements
 
