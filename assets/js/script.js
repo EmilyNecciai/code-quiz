@@ -34,21 +34,39 @@ var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
 var quizBox = document.getElementById("quiz-box")
 var startBtn = document.getElementById("start-btn");
+var restartBtn = document.getElementById("restart");
 var yourScore = document.getElementById("score");
 var yourInitials = document.getElementById("your-initials");
 
 
 // STARTING VARIABLES
-var quizScore = scoreEl;
+var yourScore = 0;
 var currentQuestion;
 var questionCounter;
-var timeLeft = 1000;
+var timeLeft = 10;
 
+
+// TIMER FUNCTION
+
+var countdown = function() {
+    var timeInterval = setInterval(function() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timerEl.textContent = timeLeft + "s";
+        } else {
+            clearInterval(timeInterval);
+            endQuiz();
+            document.getElementById("restart").classList.remove("hide");
+        }
+    }, 1000);
+}
 
 
 // START QUIZ FUNCTION
 var startQuiz = function() {
     document.getElementById("start-btn").classList.add("hide");
+    document.getElementById("main").classList.remove("hide");
+
     questionCounter = 0;
     countdown();
     showQuestions();
@@ -63,20 +81,16 @@ function placeholder() {
   
 
 function showQuestions() {
-    if (questionCounter >= questions.length) {
-        quizBox.textContent = "You finished all the questions!";
+    if (questionCounter > questions.length - 1) {
         endQuiz();
-        restartQuiz();
-        clearInterval(timeLeft);
+        document.getElementById("restart").classList.remove("hide");
     } else {
         placeholder();
         currentQuestion = questions[questionCounter];
         var questionSpace = document.createElement("h3");
         questionSpace.textContent = currentQuestion.question;
         quizBox.appendChild(questionSpace);
-    
     }
-
   }
 
   //SHOW ANSWERS
@@ -90,7 +104,7 @@ function showQuestions() {
     }
   }
 
-//   //CHOOSE ANSWER
+  //CHOOSE ANSWER
   
 quizBox.addEventListener("click", function (e) {
     e.preventDefault();
@@ -101,10 +115,13 @@ quizBox.addEventListener("click", function (e) {
     }
   });
   
-// //   // COMPARE ANSWERS
+  // COMPARE ANSWERS
   function correctAnswer(chosenAnswer) {
     if (chosenAnswer === currentQuestion.correct) {
         questionCounter++;
+        yourScore++;
+        document.getElementById("score").innerHTML = yourScore;
+
         showQuestions();
         showAnswers();
     } else {
@@ -119,35 +136,28 @@ quizBox.addEventListener("click", function (e) {
 //END QUIZ FUNCTION
 
 var endQuiz = function() {
-    document.getElementById("quiz-box").classList.toggle("hide");
-    document.getElementById("restart").classList.toggle("hide");
-    quizScore = timeLeft;
+    document.getElementById("main").classList.add("hide");
+    document.getElementById("restart").classList.add("hide");
+    clearInterval(timeLeft);
+    
+    if (timeLeft === 0 || timeLeft === null) {
+        timerEl.textContent = "Out of time!";
 
+    } else {
+        var endQuiz = document.createElement("h3");
+        endQuiz.textContent = "You completed the questions!";
+        document.getElementById("main").classList.add("hide");
+        quizBox.appendChild(endQuiz);
+    }
 }
 
-//RESTART QUIZ
-var restartQuiz = function() {
-    countdown();
-    startQuiz();
-    document.getElementById("restart").classList.toggle("hide");
-}
+// //RESTART QUIZ
+// var restartQuiz = function() {
+// }
 
 
 
-// TIMER FUNCTION
 
-var countdown = function() {
-    var timeInterval = setInterval(function() {
-        if (timeLeft >= 0) {
-            timeLeft--;
-            timerEl.textContent = timeLeft + "s";
-        } else {
-            timerEl.textContent = "Out of time!";
-            clearInterval(timeInterval);
-            endQuiz();
-        }
-    }, 1000);
-}
 
 
 //STORE YOUR SCORE FUNCTION
@@ -187,4 +197,9 @@ startBtn.addEventListener("click", function (e) {
     startQuiz();
   });
   
+  restartBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    startQuiz();
+  });
+
 

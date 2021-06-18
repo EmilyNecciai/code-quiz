@@ -18,31 +18,36 @@
         <div class="instructions">
             <h3>Answer the questions below - but keep an eye on the timer!</h3>
             <button class="start-btn" id="start-btn">Start Quiz & Timer</button>
+            <button class="hide" id="restart">Restart Quiz</button>
         </div>
 
-        <div id="quiz-box">
-
+        <div class="main" id="main">
+            <div id="quiz-box">
+                <h4>Questions</h4>
+            </div>
+   
+            <div class="timer-box">
+                <h4>Timer</h4>
+                <p id="timer"></p>
+            </div>
+    
+        
         </div>
 
-        <div class="timer-box">
-            <h4>Time remaining:</h4>
-            <p id="timer"></p>
-            <button id="restart" class="hide" onclick="restartQuiz()">Restart Quiz</button>
-        </div>
 <hr>
 
         <div class="score-box">
-            <h4>Score:</h4>
+            <h2>Your Score</h2>
             <p id="score"></p>
-            <hr>
+            <brr>
             <form id="scoreForm">
-                <p>Save Your Score: </p>
-                <br>
-                Initials: <input type="text" id="your-initials" name="initials"><br>
+                <h3>Save Your Score</h3>
+                <h4>Enter Initials and Submit</h4>
+                <input style="height: 25px;" type="text" id="your-initials" name="initials">
                 <input class="submit-button" type="button" onclick="storeScore()" value="Submit">
             </form>
 
-            <hr>
+            <br>
 
 
             <button class="show-btn" onclick="showHighScores()" id="show-btn">See High Scores</button>

@@ -12,19 +12,16 @@ body {
     color: yellowgreen;
 }
 
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 15px;
+}
+
 #quiz-box {
-    border: 1px dashed white;
-    border-radius: 15px;
     padding: 10px 0 15px 0;
-}
-
-.quiz-content {
-    padding: 5px;
-}
-
-.answerBtns {
-    padding: 10px 0 15px 0;
-    width: 51%;
+    width: 30%;
 }
 
 button:hover, 
@@ -34,8 +31,9 @@ button:hover,
 
 
 button {
-    width: 51%;
+    width: 100%;
     text-align: center;
+    display: inline-flexbox;
     padding: 10px 0 15px 0;
     margin: 5px;
 }
@@ -62,6 +60,6 @@ button {
 }
 
 .hide {
-    visibility: hidden;
+    display: none;
 }
 
